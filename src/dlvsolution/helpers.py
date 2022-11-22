@@ -6,7 +6,6 @@ from platforms.desktop.desktop_handler import DesktopHandler
 from specializations.dlv2.desktop.dlv2_desktop_service import DLV2DesktopService
 
 from src.constants import DLV_PATH
-from src.ballschart.ballschart import BallsChart
 
 
 class Color(Predicate):
@@ -33,19 +32,6 @@ class Color(Predicate):
     def set_bgr(self, bgr: []):
         self.__bgr = bgr
 
-    '''
-    @staticmethod
-    def get_color(bgr: []):
-        for color in Color.__colors:
-            if (abs(color.__bgr[0] - bgr[0]) <= Color.__MAX_DISTANCE and
-                    abs(color.__bgr[1] - bgr[1]) <= Color.__MAX_DISTANCE and
-                    abs(color.__bgr[2] - bgr[2]) <= Color.__MAX_DISTANCE):
-                return color
-        color = Color(bgr)
-        Color.__colors.append(color)
-        return color
-    '''
-
     @staticmethod
     def __euclidean_distance(color1, color2):
         return sqrt(pow(color1[0] - color2[0], 2) + pow(color1[1] - color2[1], 2) + pow(color1[2] - color2[2], 2))
@@ -58,11 +44,6 @@ class Color(Predicate):
         color = Color(bgr)
         Color.__colors.append(color)
         return color
-
-    @staticmethod
-    def print_color():
-        for color in Color.__colors:
-            print(color.get_bgr())
 
 
 class Ball(Predicate):

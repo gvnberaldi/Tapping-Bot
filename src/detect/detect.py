@@ -86,18 +86,18 @@ class MatchingBalls:
         return self.__image
 
     def __show_result(self):
-        cv.imwrite(os.path.join(SCREENSHOT_PATH, 'output.png'), self.__output)
-        cv.imwrite(os.path.join(SCREENSHOT_PATH, 'blurred.png'), self.__blurred)
+        #cv.imwrite(os.path.join(SCREENSHOT_PATH, 'output.png'), self.__output)
+        #cv.imwrite(os.path.join(SCREENSHOT_PATH, 'blurred.png'), self.__blurred)
         # print detecting result
         width = int(self.__image.shape[1] * 0.4)
         height = int(self.__image.shape[0] * 0.4)
         dim = (width, height)
         edges = cv.Canny(self.__image, 300, 600)
+        edges = cv.cvtColor(edges, cv.COLOR_GRAY2RGB)
         #cv.imwrite(os.path.join(SCREENSHOT_PATH, 'edges.png'), edges)
         resized_edges = cv.resize(edges, dim, interpolation=cv.INTER_AREA)
-        cv.imshow('edges', resized_edges)
-        cv.waitKey(0)
         resized_output = cv.resize(self.__output, dim, interpolation=cv.INTER_AREA)
         resized_blurred = cv.resize(self.__blurred, dim, interpolation=cv.INTER_AREA)
-        cv.imshow('detected tubes', np.hstack((resized_output, resized_blurred)))
+        result = np.concatenate((resized_edges, resized_output, resized_blurred), axis=1)
+        cv.imshow('Result', result)
         cv.waitKey(0)
