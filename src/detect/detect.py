@@ -16,7 +16,7 @@ class MatchingBalls:
     RADIUS_RATIO = 50
 
     def __init__(self):
-        self.__image = getImg(os.path.join(SCREENSHOT_PATH, 'screenshot_11.png'))
+        self.__image = getImg(os.path.join(SCREENSHOT_PATH, 'screenshot_04.png'))
         self.__output = self.__image.copy()  # Used to display the result
         self.__blurred = cv.GaussianBlur(self.__image, (65, 65), 0)  # Used to find the color of the balls
         self.__first_template = getImg(os.path.join(SPRITE_PATH, 'tube.png'), 0)

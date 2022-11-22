@@ -1,3 +1,6 @@
+import os
+
+from src.constants import CLIENT_PATH
 from src.detect.detect import MatchingBalls
 from src.dlvsolution.dlvsolution import DLVSolution
 from src.dlvsolution.helpers import get_colors, get_balls_and_tubes, get_balls_position
@@ -60,6 +63,8 @@ def main():
         print(f"La pallina {on.get_ball_above()} si trova sulla pallina {on.get_ball_below()} nel tubo {on.get_tube()} allo step {on.get_step()}")
     '''
 
+    #os.chdir(CLIENT_PATH)
+
     coordinates = []
     x1, y1, x2, y2 = 0, 0, 0, 0
     for move in moves:
@@ -73,7 +78,8 @@ def main():
                 x2 = tube.get_x()
                 y2 = tube.get_y()
         coordinates.append({'x1': x1, 'y1': y1, 'x2': x2, 'y2': y2})
-        # print("COORD: (x1:%d, y1:%d) (x2:%d, y2:%d)" % (x1, y1, x2, y2))
+        #os.system(f"python2 client.py --url http://127.0.0.1:8000 --light 'tap {x1} {y1}'")
+        #os.system(f"python2 client.py --url http://127.0.0.1:8000 --light 'tap {x2} {y2}'")
 
     make_json(coordinates)
 
