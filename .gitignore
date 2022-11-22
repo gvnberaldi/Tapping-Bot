@@ -189,7 +189,7 @@ fabric.properties
 src/resources/screenshots/*
 src/resources/sprites/*
 
-!src/resources/sceenshots/.gitkeep
+!src/resources/screenshots/.gitkeep
 !src/resources/sprites/.gitkeep
 
 
