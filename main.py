@@ -63,7 +63,7 @@ def main():
         print(f"La pallina {on.get_ball_above()} si trova sulla pallina {on.get_ball_below()} nel tubo {on.get_tube()} allo step {on.get_step()}")
     '''
 
-    #os.chdir(CLIENT_PATH)
+    # os.chdir(CLIENT_PATH)
 
     coordinates = []
     x1, y1, x2, y2 = 0, 0, 0, 0
@@ -78,8 +78,8 @@ def main():
                 x2 = tube.get_x()
                 y2 = tube.get_y()
         coordinates.append({'x1': x1, 'y1': y1, 'x2': x2, 'y2': y2})
-        #os.system(f"python2 client.py --url http://127.0.0.1:8000 --light 'tap {x1} {y1}'")
-        #os.system(f"python2 client.py --url http://127.0.0.1:8000 --light 'tap {x2} {y2}'")
+        # os.system(f"python2 client.py --url http://127.0.0.1:8000 --light 'tap {x1} {y1}'")
+        # os.system(f"python2 client.py --url http://127.0.0.1:8000 --light 'tap {x2} {y2}'")
 
     make_json(coordinates)
 
