@@ -13,20 +13,14 @@ class DLVSolution:
     def __init__(self):
         try:
             self.__handler = choose_dlv_system()
-            self.__static_facts = None
-            self.__dinamic_facts = None
-            self.__fixedInputProgram = ASPInputProgram()
+            self.__static_facts = ASPInputProgram()
+            self.__dinamic_facts = ASPInputProgram()
+            self.__fixed_input_program = ASPInputProgram()
 
-            self.__init_fixed()
         except Exception as e:
             print(str(e))
 
-    def __init_fixed(self):
-        self.__fixedInputProgram.add_files_path(os.path.join(RESOURCES_PATH, "ballSort.txt"))
-        self.__handler.add_program(self.__fixedInputProgram)
-
     def __init_static_facts(self, colors: [], balls: [], tubes: []):
-        self.__static_facts = ASPInputProgram()
         for color in colors:
             self.__static_facts.add_object_input(color)
 
@@ -46,6 +40,13 @@ class DLVSolution:
 
         print(self.__static_facts.get_programs())
 
+    def __init_dinamic_facts(self, on: []):
+        for o in on:
+            self.__dinamic_facts.add_object_input(o)
+
+    def __init_fixed(self):
+        self.__fixed_input_program.add_files_path(os.path.join(RESOURCES_PATH, "ballSort.txt"))
+
     def call_asp(self, colors: [], balls: [], tubes: [], on: []):
 
         ASPMapper.get_instance().register_class(Color)
@@ -56,13 +57,12 @@ class DLVSolution:
         ASPMapper.get_instance().register_class(GameOver)
 
         self.__init_static_facts(colors, balls, tubes)
-
-        self.__dinamic_facts = ASPInputProgram()
-        for o in on:
-            self.__dinamic_facts.add_object_input(o)
+        self.__init_dinamic_facts(on)
+        self.__init_fixed()
 
         self.__handler.add_program(self.__static_facts)
         self.__handler.add_program(self.__dinamic_facts)
+        self.__handler.add_program(self.__fixed_input_program)
 
         option = OptionDescriptor("--filter=on/4, move/3, gameOver/1")
         self.__handler.add_option(option)

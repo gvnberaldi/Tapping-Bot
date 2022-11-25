@@ -78,8 +78,8 @@ class MatchingBalls:
         match = [(int(m[0] + w / 2), int(m[1] + h / 2)) for m in match]
 
         # draw the empty tubes
-        # for p in match:
-            # cv.rectangle(self.__output, (int(p[0] - w/2), int(p[1] - h/2)), (int(p[0] + w/2), int(p[1] + h/2)), (0, 0, 255), 3)
+        for p in match:
+            cv.rectangle(self.__output, (int(p[0] - w/2), int(p[1] - h/2)), (int(p[0] + w/2), int(p[1] + h/2)), (0, 0, 255), 3)
         return match
 
     def get_image(self):
@@ -89,15 +89,16 @@ class MatchingBalls:
         #cv.imwrite(os.path.join(SCREENSHOT_PATH, 'output.png'), self.__output)
         #cv.imwrite(os.path.join(SCREENSHOT_PATH, 'blurred.png'), self.__blurred)
         # print detecting result
-        width = int(self.__image.shape[1] * 0.4)
-        height = int(self.__image.shape[0] * 0.4)
+        width = int(self.__image.shape[1] * 0.3)
+        height = int(self.__image.shape[0] * 0.3)
         dim = (width, height)
         edges = cv.Canny(self.__image, 300, 600)
         edges = cv.cvtColor(edges, cv.COLOR_GRAY2RGB)
         #cv.imwrite(os.path.join(SCREENSHOT_PATH, 'edges.png'), edges)
+        resized_input = cv.resize(self.__image, dim, interpolation=cv.INTER_AREA)
         resized_edges = cv.resize(edges, dim, interpolation=cv.INTER_AREA)
         resized_output = cv.resize(self.__output, dim, interpolation=cv.INTER_AREA)
         resized_blurred = cv.resize(self.__blurred, dim, interpolation=cv.INTER_AREA)
-        result = np.concatenate((resized_edges, resized_output, resized_blurred), axis=1)
+        result = np.concatenate((resized_input, resized_edges, resized_output, resized_blurred), axis=1)
         cv.imshow('Result', result)
         cv.waitKey(0)
