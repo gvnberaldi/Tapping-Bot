@@ -190,7 +190,9 @@ src/resources/screenshots/*
 src/resources/sprites/*
 
 !src/resources/screenshots/.gitkeep
-!src/resources/sprites/.gitkeep
+!src/resources/sprites/tube_http.png
+!src/resources/sprites/tall_tube_http.png
+!src/resources/sprites/small_tube_http.png
 
 
 
