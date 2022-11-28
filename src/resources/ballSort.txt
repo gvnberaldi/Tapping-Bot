@@ -10,14 +10,8 @@ on(B1, B2, T, S + 1) :- step(S), move(B1, T, S), onTheTop(B2, T, S).
 on(B1, 0, T, S + 1) :- step(S), move(B1, T, S), not notEmptyTube(T, S).
 on(B1, B2, T, S + 1) :- step(S), on(B1, B2, T, S), not ballMoved(B1,S).
 
-%Palline contenute nella boccetta T allo step S
+%Numero di palline contenute nella boccetta T allo step S
 size(T, S, N) :- step(S), tube(T), #count{B: on(B, _, T, S)} = N.
-
-%Size dei tubi pieni all'inizio del gioco (step 0)
-%tubeSize(N) :- on(_, _, T, 0), #count{B: on(B, _, T, 0)} = N.
-
-%Numero di tubi pieni all'inizio del gioco (step 0)
-%fullTube(N) :- tubeSize(M),  #count{T: size(T, 0, M)} = N.
 
 %La pallina B ha un'altra pallina sopra allo step S
 ballOnIt(B, S) :- step(S), on(_, B, _, S), B != 0.
@@ -28,6 +22,7 @@ onTheTop(B, T, S) :- step(S), on(B, _, T, S), not ballOnIt(B,S).
 %Numero di palline di un certo colore in cima alle boccette allo step S
 ballOnTheTopOfColor(C, N, S) :- step(S), color(C), #count{B : onTheTop(B, _, S), ball(B, C)} = N.
 
+%La pallina B è nel tubo T allo step S
 onTheTube(B, T, S) :- step(S), on(B, _, T, S).
 
 %E' stata effettuata una mossa allo step S
@@ -45,7 +40,7 @@ ballMoved(B, S) :- step(S), move(B, _, S).
 %Allo step S la boccetta T è completa
 completedTube(T, S) :- step(S), tube(T), #count{C : on(B, _, T, S), ball(B, C)} = 1, size(T, S, N), tubeSize(M), N = M.
 
-%Numero di boccette completate
+%Numero di boccette completate allo step S
 completed(N, S) :- completedTube(_, S), #count{T: completedTube(T, S)} = N.
 
 %La boccetta T contiene palline di un solo colore C allo step S
@@ -53,7 +48,7 @@ singolColorTube(T, S) :- on(_, _, T, S), #count{C : on(B, _, T, S), ball(B, C)} 
 singolColorTubeWithColor(T, C, S) :- singolColorTube(T, S), on(B,_,T,S), ball(B,C).
 singolColorTubeWithColorMax(T, C, S) :- singolColorTubeWithColor(T, C, S), #max{N : singolColorTubeWithColor(T1, C, S), size(T1, S, N)} = MAX, size(T, S, MAX).
 
-%Il gioco è finito se tutte le boccette sono state completate
+%Il gioco è finito allo step S se tutte le boccette sono state completate a tale step
 gameOver(S) :- fullTube(N), completed(N, S).
 
 %CONSTRAINTS
